@@ -16,7 +16,7 @@ class Autobuy(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.guild is None and message.author.id == 270904126974590976 and self.bot.config_dict[self.bot.account_id]["state"]:
+        if message.guild is None and message.author.id == 270904126974590976 and self.bot.config["state"]:
             channel = await message.author.create_dm()
             for embed in message.embeds:
                 embed = embed.to_dict()

@@ -3,8 +3,7 @@ import re
 
 from discord.ext import commands
 
-game = None
-Games = {
+games = {
     "apex legends": 0,
     "call of duty": 1,
     "csgo": 2,
@@ -39,8 +38,7 @@ class Stream(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel.id != self.bot.channel_id or not self.bot.config_dict[self.bot.account_id]["state"] or not \
-                self.bot.config_dict[self.bot.account_id]["commands"]["stream"]:
+        if message.channel.id != self.bot.channel_id or not self.bot.config["state"]:
             return
 
         for embed in message.embeds:
@@ -50,13 +48,14 @@ class Stream(commands.Cog):
             try:
                 if embed["title"] == "Trending Game":
                     global game
-                    game = Games[re.search("\*\*(.*?)\*\*", embed["description"]).group(1).title().lower()]
+                    game = games[re.search("\*\*(.*?)\*\*", embed["description"]).group(1).title().lower()]
             except KeyError:
                 pass
 
             # Go live
             try:
                 if embed["fields"][1]["name"] == "Last Live":
+                    self.bot.lock = True
                     await self.bot.click(message, 0, 0)
 
                     # Get trending game
@@ -67,10 +66,11 @@ class Stream(commands.Cog):
 
                     # Select trending game
                     await self.bot.select(message, 0, 0, game)
-                    await asyncio.sleep(0.7)
+                    await asyncio.sleep(0.5)
                     await self.bot.click(message, 1, 0)
-                    await asyncio.sleep(0.7)
+                    await asyncio.sleep(0.5)
                     await self.bot.click(message, 0, 1)
+                    self.bot.lock = False
             except (KeyError, IndexError):
                 pass
 

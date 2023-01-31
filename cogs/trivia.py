@@ -21,24 +21,24 @@ with open(resource_path("resources/trivia.json")) as file:
 class Trivia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.chance = self.bot.config_dict[self.bot.account_id]["trivia_correct_chance"]
+        self.chance = self.bot.config["trivia_correct_chance"]
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel.id != self.bot.channel_id or not self.bot.config_dict[self.bot.account_id]["state"] or not \
-                self.bot.config_dict[self.bot.account_id]["commands"]["trivia"]:
+        if message.channel.id != self.bot.channel_id or not self.bot.config["state"]:
             return
 
         for embed in message.embeds:
             embed = embed.to_dict()
             try:
                 if embed["fields"][0]["name"] == "Difficulty":
-                    category = embed["fields"][1]["value"][1:-1]
+                    category = embed["fields"][1]["value"]
                     question = re.search("\*\*(.*?)\*\*", embed["description"]).group(1)
                     try:
                         answer = trivia_dict[category][question]
                     except KeyError:
                         await self.bot.click(message, 0, random.randint(0, 3))
+                        print(f"UNKNOWN TRIVIA QUESTION (REPORT TO PWO) \n{category}: {question}")
                         return
                     if random.random() <= self.chance:
                         for count, i in enumerate(message.components[0].children):

@@ -27,9 +27,11 @@ class Minigames(commands.Cog):
 
         for embed in after.embeds:
             embed = embed.to_dict()
+
             # MoleMan
             try:
                 if "Dodge the Worms!" in embed["description"]:
+                    self.bot.lock = True
                     moleman = embed["description"].splitlines()[5]
                     for i in reversed(embed["description"].splitlines()):
                         if i not in worms_loc:
@@ -57,6 +59,7 @@ class Minigames(commands.Cog):
                                 if moleman_loc[moleman] == 1:
                                     await self.bot.click(after, 0, 1)
                                 break
+                    self.bot.lock = False
                     return
             except KeyError:
                 pass
@@ -64,16 +67,14 @@ class Minigames(commands.Cog):
             # Football
             try:
                 if "Hit the ball!" in embed["description"]:
+                    self.bot.lock = True
                     if ":levitate:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 2)
                     elif "<:emptyspace:827651824739156030>:levitate:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 0)
-                    if (
-                        "<:emptyspace:827651824739156030>"
-                        "<:emptyspace:827651824739156030>:levitate:"
-                        == embed["description"].splitlines()[2]
-                    ):
+                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030>:levitate:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 1)
+                    self.bot.lock = False
                     return
             except KeyError:
                 pass
@@ -81,19 +82,14 @@ class Minigames(commands.Cog):
             # Basketball
             try:
                 if "Dunk the ball!" in embed["description"]:
-                    if (
-                        "<:emptyspace:827651824739156030>"
-                        "<:emptyspace:827651824739156030>:basketball:"
-                        == embed["description"].splitlines()[2]
-                    ):
+                    self.bot.lock = True
+                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030>:basketball:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 2)
-                    elif (
-                        "<:emptyspace:827651824739156030>:basketball:"
-                        == embed["description"].splitlines()[2]
-                    ):
+                    elif "<:emptyspace:827651824739156030>:basketball:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 1)
                     elif ":basketball:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 0)
+                    self.bot.lock = False
                     return
             except KeyError:
                 pass
@@ -101,28 +97,21 @@ class Minigames(commands.Cog):
             # Dragon
             try:
                 if "Dodge the Fireball" in embed["description"]:
-                    if (
-                        "<:emptyspace:827651824739156030>"
-                        "<:emptyspace:827651824739156030><:FireBall:883714770748964864>"
-                        == embed["description"].splitlines()[2]
-                    ):
+                    self.bot.lock = True
+                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030><:FireBall:883714770748964864>" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 1)
-                    elif (
-                        "<:emptyspace:827651824739156030><:FireBall:883714770748964864>"
-                        == embed["description"].splitlines()[2]
-                    ):
+                    elif "<:emptyspace:827651824739156030><:FireBall:883714770748964864>" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 0)
-                    elif (
-                        "<:FireBall:883714770748964864>"
-                        == embed["description"].splitlines()[2]
-                    ):
+                    elif "<:FireBall:883714770748964864>" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 2)
+                    self.bot.lock = False
             except KeyError:
                 pass
 
             # Catch the fish
             try:
                 if "Catch the fish!" in embed["description"]:
+                    self.bot.lock = True
                     if (
                         "<:emptyspace:827651824739156030>"
                         "<:emptyspace:827651824739156030>"
@@ -157,6 +146,7 @@ class Minigames(commands.Cog):
                         == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 0)
+                        self.bot.lock = False
             except KeyError:
                 pass
 
@@ -167,46 +157,18 @@ class Minigames(commands.Cog):
 
         for embed in message.embeds:
             embed = embed.to_dict()
+
             # Color match
             try:
-                if (
-                    "Look at each color next to the words closely!"
-                    in embed["description"]
-                ):
+                if "Look at each color next to the words closely!" in embed["description"]:
+                    self.bot.lock = True
                     options = {
-                        str(
-                            re.search(
-                                "`(.*?)`",
-                                embed["description"].splitlines()[1],
-                            ).group(1)
-                        ): str(
-                            re.search(
-                                ":(.*?):",
-                                embed["description"].splitlines()[1],
-                            ).group(1)
-                        ),
-                        str(
-                            re.search(
-                                "`(.*?)`",
-                                embed["description"].splitlines()[2],
-                            ).group(1)
-                        ): str(
-                            re.search(
-                                ":(.*?):",
-                                embed["description"].splitlines()[2],
-                            ).group(1)
-                        ),
-                        str(
-                            re.search(
-                                "`(.*?)`",
-                                embed["description"].splitlines()[3],
-                            ).group(1)
-                        ): str(
-                            re.search(
-                                ":(.*?):",
-                                embed["description"].splitlines()[3],
-                            ).group(1)
-                        ),
+                        str(re.search("`(.*?)`", embed["description"].splitlines()[1]).group(1)):
+                            str(re.search(":(.*?):", embed["description"].splitlines()[1]).group(1)),
+                        str(re.search("`(.*?)`", embed["description"].splitlines()[2]).group(1)):
+                            str(re.search(":(.*?):", embed["description"].splitlines()[2]).group(1)),
+                        str(re.search("`(.*?)`", embed["description"].splitlines()[3]).group(1)):
+                            str(re.search(":(.*?):", embed["description"].splitlines()[3]).group(1)),
                     }
                     await asyncio.sleep(6)
                     embed = message.embeds[0].to_dict()
@@ -215,6 +177,7 @@ class Minigames(commands.Cog):
                     for count, i in enumerate(message.components[0].children):
                         if i.label == color:
                             await self.bot.click(message, 0, count)
+                    self.bot.lock = False
                     return
             except KeyError:
                 pass
@@ -222,22 +185,28 @@ class Minigames(commands.Cog):
             # Emoji
             try:
                 if "Look at the emoji closely!" in embed["description"]:
+                    self.bot.lock = True
                     emoji = str(embed["description"].splitlines()[1])
                     await asyncio.sleep(4)
                     for count, i in enumerate(message.components[0].children):
                         if str(i.emoji) == emoji:
                             await self.bot.click(message, 0, count)
+                            self.bot.lock = False
                             return
                     for count, i in enumerate(message.components[1].children):
                         if str(i.emoji) == emoji:
                             await self.bot.click(message, 1, count)
-                        return
+                            self.bot.lock = False
+                            return
+                    self.bot.lock = False
+                    return
             except KeyError:
                 pass
 
             # Repeat order
             try:
                 if any(i in embed["description"] for i in ["Repeat Order", "word order.", "words order"]):
+                    self.bot.lock = True
                     order = [
                         str(embed["description"].splitlines()[1])[1:-1],
                         str(embed["description"].splitlines()[2])[1:-1],
@@ -256,6 +225,7 @@ class Minigames(commands.Cog):
                     for i in order:
                         await self.bot.click(message, 0, answers[i])
                         await asyncio.sleep(0.2)
+                    self.bot.lock = False
                     return
             except KeyError:
                 pass
@@ -281,6 +251,8 @@ class Minigames(commands.Cog):
                     await self.bot.click(message, 0, 0)
             except KeyError:
                 pass
+
+        self.bot.lock = False
 
 
 async def setup(bot):

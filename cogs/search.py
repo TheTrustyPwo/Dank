@@ -20,8 +20,7 @@ class Search(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel.id != self.bot.channel_id or not self.bot.config_dict[self.bot.account_id]["state"] or not \
-                self.bot.config_dict[self.bot.account_id]["commands"]["search"]:
+        if message.channel.id != self.bot.channel_id or not self.bot.config["state"]:
             return
 
         for embed in message.embeds:

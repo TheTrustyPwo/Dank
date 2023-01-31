@@ -52,10 +52,12 @@ async def start_bot(token, account_id):
         def __init__(self):
             super().__init__(command_prefix="-", self_bot=True)
             self.config_dict = config_dict
+            self.config = config_dict[account_id]
             self.window = window
             self.account_id = account_id
-            self.channel_id = int(config_dict[account_id]["channel_id"])
+            self.channel_id = int(self.config["channel_id"])
             self.channel = None
+            self.lock = False
             self.commands_list = {
                 "daily": "daily",
                 "work": "work",
@@ -71,7 +73,7 @@ async def start_bot(token, account_id):
                 "hl": "highlow",
                 "trivia": "trivia"
             }
-            premium = config_dict[account_id]["premium"]
+            premium = self.config["premium"]
             self.commands_delay = {
                 "use": 180,
                 "trivia": 3 if premium else 5,
@@ -98,6 +100,7 @@ async def start_bot(token, account_id):
         async def update(self):
             with open("config.json", "r") as config_file:
                 self.config_dict = json.load(config_file)
+                self.config = self.config_dict[self.account_id]
 
         @staticmethod
         async def click(message, component, children):

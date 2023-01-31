@@ -17,15 +17,13 @@ class Commands(commands.Cog):
 
     @tasks.loop(seconds=0.05)
     async def commands(self):
-        if self.bot.config_dict[self.bot.account_id]["state"] is False:
-            await asyncio.sleep(1)
+        if self.bot.config["state"] is False or self.bot.lock:
             return
         for command in self.bot.commands_list:
             # Handled in cogs
             if command == "bj":
                 continue
-            if time.time() - self.bot.last_ran[command] < self.bot.commands_delay[command] or not self.bot.config_dict[self.bot.account_id]["commands"][command]:
-                await asyncio.sleep(0.5)
+            if time.time() - self.bot.last_ran[command] < self.bot.commands_delay[command] or not self.bot.config["commands"][command]:
                 continue
             if command == "use":
                 await self.bot.send(self.bot.commands_list[command], item=ITEMS[self.item])

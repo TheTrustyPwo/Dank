@@ -9,8 +9,7 @@ class Hl(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.channel.id != self.bot.channel_id or not self.bot.config_dict[self.bot.account_id]["state"] or not \
-                self.bot.config_dict[self.bot.account_id]["commands"]["hl"]:
+        if message.channel.id != self.bot.channel_id or not self.bot.config["state"]:
             return
 
         for embed in message.embeds:
