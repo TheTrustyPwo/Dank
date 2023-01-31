@@ -91,7 +91,7 @@ async def start_bot(token, account_id):
             }
             # Add delay to commands
             for command in self.commands_delay:
-                self.commands_delay[command] = int(self.commands_delay[command] * 1.1)
+                self.commands_delay[command] = int(self.commands_delay[command] + 1)
             self.last_ran = {}
             for command in self.commands_list:
                 self.last_ran[command] = 0
@@ -385,7 +385,7 @@ class MainWindow(QMainWindow):
                 "trivia_correct_chance": 0.75,
                 "channel_id": "",
                 "discord_token": "",
-                "premium": true,
+                "premium": True,
                 "state": False,
                 "autobuy": {
                     "lifesavers": {

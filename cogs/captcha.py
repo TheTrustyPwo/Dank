@@ -16,6 +16,8 @@ class Captcha(commands.Cog):
                 if "CAPTCHA" not in embed["title"]:
                     return
 
+                self.bot.lock = True
+
                 # Matching image captcha
                 if "matching image" in embed["description"]:
                     captcha = embed.image.url
@@ -39,6 +41,8 @@ class Captcha(commands.Cog):
                         ]:
                             await self.bot.click(message, 0, count)
                             break
+
+                self.bot.lock = False
 
             except KeyError:
                 pass

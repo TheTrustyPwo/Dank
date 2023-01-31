@@ -66,9 +66,9 @@ class Stream(commands.Cog):
 
                     # Select trending game
                     await self.bot.select(message, 0, 0, game)
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.7)
                     await self.bot.click(message, 1, 0)
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.7)
                     await self.bot.click(message, 0, 1)
                     self.bot.lock = False
             except (KeyError, IndexError):

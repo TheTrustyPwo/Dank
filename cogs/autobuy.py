@@ -42,6 +42,8 @@ class Autobuy(commands.Cog):
                         await self.bot.send("use", item="Ammo")
                     elif "Fishing Bait expired!" in embed["description"]:
                         await self.bot.send("use", item="Fishing Bait")
+                    elif "Cowboy Boots expired!" in embed["description"]:
+                        await self.bot.send("use", item="Cowboy Boots")
                     elif "your padlock broke" in embed["description"] or "stopped by your padlock" in embed["description"]:
                         await self.bot.send("use", item="Padlock")
                     elif "your bank is being robbed!" in embed["description"]:

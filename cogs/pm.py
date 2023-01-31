@@ -23,7 +23,14 @@ class Pm(commands.Cog):
                     await self.bot.select(message, 1, 0, random.randint(0, 4))
                     await asyncio.sleep(0.2)
                     await self.bot.click(message, 2, 0)
+                    await asyncio.sleep(0.2)
                     self.bot.lock = False
+            except KeyError:
+                pass
+
+            try:
+                if "dead meme" in embed["description"]:
+                    self.bot.last_ran["pm"] = time.time() + 60 * 3 - self.bot.commands_delay["pm"]
             except KeyError:
                 pass
 

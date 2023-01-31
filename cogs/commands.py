@@ -5,7 +5,7 @@ import time
 from discord.ext import commands, tasks
 
 
-ITEMS = ["Lucky Horseshoe", "Pizza", "Ammo", "Fishing Bait"]
+ITEMS = ["Lucky Horseshoe", "Pizza", "Ammo", "Fishing Bait", "Cowboy Boots"]
 
 class Commands(commands.Cog):
     def __init__(self, bot):
