@@ -17,7 +17,7 @@ class Commands(commands.Cog):
 
     @tasks.loop(seconds=0.05)
     async def commands(self):
-        if self.bot.config["state"] is False or self.bot.lock:
+        if not self.bot.config["state"] or self.bot.lock:
             return
         for command in self.bot.commands_list:
             # Handled in cogs
