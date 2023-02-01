@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_DankMemerGrinder(object):
+class UI_DankMemerGrinder(object):
     def __init__(self, accounts):
         self.accounts = accounts
 
@@ -414,7 +414,7 @@ if __name__ == "__main__":
 
     app = QtWidgets.QApplication(sys.argv)
     DankMemerGrinder = QtWidgets.QMainWindow()
-    ui = Ui_DankMemerGrinder()
+    ui = UI_DankMemerGrinder()
     ui.setupUi(DankMemerGrinder)
     DankMemerGrinder.show()
     sys.exit(app.exec_())
