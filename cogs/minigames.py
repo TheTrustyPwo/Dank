@@ -170,7 +170,7 @@ class Minigames(commands.Cog):
                         str(re.search("`(.*?)`", embed["description"].splitlines()[3]).group(1)):
                             str(re.search(":(.*?):", embed["description"].splitlines()[3]).group(1)),
                     }
-                    await asyncio.sleep(6)
+                    await asyncio.sleep(4)
                     embed = message.embeds[0].to_dict()
                     word = re.search("`(.*?)`", embed["description"]).group(1)
                     color = options[word]
