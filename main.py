@@ -80,7 +80,7 @@ async def start_bot(token, account_id):
                 "dig": 25 if premium else 40,
                 "fish": 25 if premium else 40,
                 "hunt": 25 if premium else 40,
-                "pm": 15 if premium else 20,
+                "pm": 16 if premium else 21,
                 "beg": 25 if premium else 40,
                 "hl": 10 if premium else 20,
                 "search": 15 if premium else 30,
