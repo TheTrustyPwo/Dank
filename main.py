@@ -80,7 +80,7 @@ async def start_bot(token, account_id):
                 "dig": 25 if premium else 40,
                 "fish": 25 if premium else 40,
                 "hunt": 25 if premium else 40,
-                "pm": 20 if premium else 15,
+                "pm": 15 if premium else 20,
                 "beg": 25 if premium else 40,
                 "hl": 10 if premium else 20,
                 "search": 15 if premium else 30,
@@ -120,13 +120,13 @@ async def start_bot(token, account_id):
         async def send(self, command_name, channel=None, **kwargs):
             if channel is None:
                 channel = self.channel
-                async for cmd in channel.slash_commands(query=command_name, limit=None):
-                    try:
-                        if cmd.application.id == 270904126974590976:
-                            await cmd(**kwargs)
-                    except (discord.errors.DiscordServerError, KeyError, discord.errors.InvalidData):
-                        pass
-                    return
+            async for cmd in channel.slash_commands(query=command_name, limit=None):
+                try:
+                    if cmd.application.id == 270904126974590976:
+                        await cmd(**kwargs)
+                except (discord.errors.DiscordServerError, KeyError, discord.errors.InvalidData):
+                    pass
+                return
 
         async def sub_send(self, command_name, sub_command_name, channel=None, **kwargs):
             if channel is None:
@@ -136,8 +136,15 @@ async def start_bot(token, account_id):
                     if cmd.application.id != 270904126974590976:
                         continue
                     for count, sub_cmd in enumerate(cmd.children):
-                        if sub_cmd.name.lower() == sub_command_name.lower():
-                            await cmd.children[count](**kwargs)
+                        if " " in sub_command_name:
+                            type = sub_command_name.split()[1].lower()
+                            # await list(filter(lambda sub: sub.name == type, sub_cmd.children))[0](**kwargs)
+                            for count1, sub_cmd1 in enumerate(sub_cmd.children):
+                                if sub_cmd1.name.lower() == type.lower():
+                                    await sub_cmd1(**kwargs)
+                                    return
+                        elif sub_cmd.name.lower() == sub_command_name.lower():
+                            await sub_cmd(**kwargs)
                             break
                     return
             except (discord.errors.DiscordServerError, KeyError, discord.errors.InvalidData):
@@ -179,6 +186,7 @@ async def start_bot(token, account_id):
             await self.load_extension("cogs.minigames")
             await self.load_extension("cogs.autobuy")
             await self.load_extension("cogs.commands")
+            await self.load_extension("cogs.market")
 
     try:
         await MyClient().start(token)
@@ -219,7 +227,7 @@ class MainWindow(QMainWindow):
 
         QFontDatabase.addApplicationFont(resource_path("resources/fonts/Segoe.ttf"))
         QFontDatabase.addApplicationFont(resource_path("resources/fonts/Impact.ttf"))
-        self.ui = Ui_DankMemerGrinder(len(config_dict) + 1)
+        self.ui = UI_DankMemerGrinder(len(config_dict) + 1)
         self.ui.setupUi(self)
         # Initialize settings
         for account_id in range(1, len(config_dict) + 1):
