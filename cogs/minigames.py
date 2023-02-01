@@ -72,7 +72,8 @@ class Minigames(commands.Cog):
                         await self.bot.click(after, 0, 2)
                     elif "<:emptyspace:827651824739156030>:levitate:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 0)
-                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030>:levitate:" == embed["description"].splitlines()[2]:
+                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030>:levitate:" == \
+                            embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 1)
                     self.bot.lock = False
                     return
@@ -83,7 +84,8 @@ class Minigames(commands.Cog):
             try:
                 if "Dunk the ball!" in embed["description"]:
                     self.bot.lock = True
-                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030>:basketball:" == embed["description"].splitlines()[2]:
+                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030>:basketball:" == \
+                            embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 2)
                     elif "<:emptyspace:827651824739156030>:basketball:" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 1)
@@ -98,9 +100,11 @@ class Minigames(commands.Cog):
             try:
                 if "Dodge the Fireball" in embed["description"]:
                     self.bot.lock = True
-                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030><:FireBall:883714770748964864>" == embed["description"].splitlines()[2]:
+                    if "<:emptyspace:827651824739156030>" "<:emptyspace:827651824739156030><:FireBall:883714770748964864>" == \
+                            embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 1)
-                    elif "<:emptyspace:827651824739156030><:FireBall:883714770748964864>" == embed["description"].splitlines()[2]:
+                    elif "<:emptyspace:827651824739156030><:FireBall:883714770748964864>" == \
+                            embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 0)
                     elif "<:FireBall:883714770748964864>" == embed["description"].splitlines()[2]:
                         await self.bot.click(after, 0, 2)
@@ -113,37 +117,37 @@ class Minigames(commands.Cog):
                 if "Catch the fish!" in embed["description"]:
                     self.bot.lock = True
                     if (
-                        "<:emptyspace:827651824739156030>"
-                        "<:emptyspace:827651824739156030>"
-                        "<a:LegendaryFish:971430841211322408>"
-                        == embed["description"].splitlines()[1]
+                            "<:emptyspace:827651824739156030>"
+                            "<:emptyspace:827651824739156030>"
+                            "<a:LegendaryFish:971430841211322408>"
+                            == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 2)
                     elif (
-                        "<:emptyspace:827651824739156030>"
-                        "<a:LegendaryFish:971430841211322408>"
-                        == embed["description"].splitlines()[1]
+                            "<:emptyspace:827651824739156030>"
+                            "<a:LegendaryFish:971430841211322408>"
+                            == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 1)
                     elif (
-                        "<a:LegendaryFish:971430841211322408>"
-                        == embed["description"].splitlines()[1]
+                            "<a:LegendaryFish:971430841211322408>"
+                            == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 0)
                     if (
-                        "<:emptyspace:827651824739156030>"
-                        "<:emptyspace:827651824739156030><:Kraken:860228238956429313>"
-                        == embed["description"].splitlines()[1]
+                            "<:emptyspace:827651824739156030>"
+                            "<:emptyspace:827651824739156030><:Kraken:860228238956429313>"
+                            == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 2)
                     elif (
-                        "<:emptyspace:827651824739156030><:Kraken:860228238956429313>"
-                        == embed["description"].splitlines()[1]
+                            "<:emptyspace:827651824739156030><:Kraken:860228238956429313>"
+                            == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 1)
                     elif (
-                        "<:Kraken:860228238956429313>"
-                        == embed["description"].splitlines()[1]
+                            "<:Kraken:860228238956429313>"
+                            == embed["description"].splitlines()[1]
                     ):
                         await self.bot.click(after, 0, 0)
                         self.bot.lock = False

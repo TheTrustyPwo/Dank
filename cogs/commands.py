@@ -1,11 +1,10 @@
 import asyncio
-import random
 import time
 
 from discord.ext import commands, tasks
 
-
 ITEMS = ["Lucky Horseshoe", "Pizza", "Ammo", "Fishing Bait", "Cowboy Boots"]
+
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -23,7 +22,8 @@ class Commands(commands.Cog):
             # Handled in cogs
             if command == "bj":
                 continue
-            if time.time() - self.bot.last_ran[command] < self.bot.commands_delay[command] or not self.bot.config["commands"][command]:
+            if time.time() - self.bot.last_ran[command] < self.bot.commands_delay[command] or not \
+            self.bot.config["commands"][command]:
                 continue
             if command == "use":
                 await self.bot.send(self.bot.commands_list[command], item=ITEMS[self.item])

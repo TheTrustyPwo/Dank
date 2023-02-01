@@ -82,8 +82,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"main_menu_frame_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"main_menu_frame_{account_id}").setSizePolicy(size_policy)
     getattr(self.ui, f"main_menu_frame_{account_id}").setFrameShape(
@@ -260,8 +260,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"settings_frame_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"settings_frame_{account_id}").setSizePolicy(size_policy)
     getattr(self.ui, f"settings_frame_{account_id}").setFrameShape(
@@ -620,8 +620,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"commands_frame_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"commands_frame_{account_id}").setSizePolicy(size_policy)
     getattr(self.ui, f"commands_frame_{account_id}").setFrameShape(
@@ -649,8 +649,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"commands_settings_frame_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"commands_settings_frame_{account_id}").setSizePolicy(size_policy)
     getattr(self.ui, f"commands_settings_frame_{account_id}").setFrameShape(
@@ -713,7 +713,7 @@ def load_account(self, account_id):
         if i == "left":
             commands_list = commands[: math.floor(len(commands) / 2)]
         elif i == "right":
-            commands_list = commands[math.floor(len(commands) / 2) :]
+            commands_list = commands[math.floor(len(commands) / 2):]
         for command in commands_list:
             setattr(
                 self.ui,
@@ -916,8 +916,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"auto_buy_frame_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"auto_buy_frame_{account_id}").setSizePolicy(size_policy)
     getattr(self.ui, f"auto_buy_frame_{account_id}").setFrameShape(
@@ -981,8 +981,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"lifesavers_checkbox_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"lifesavers_checkbox_{account_id}").setSizePolicy(size_policy)
     font = QtGui.QFont()
@@ -1013,8 +1013,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"lifesavers_amount_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"lifesavers_amount_{account_id}").setSizePolicy(size_policy)
     getattr(self.ui, f"lifesavers_amount_{account_id}").setMinimumSize(
@@ -1079,8 +1079,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"fishing_checkbox_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"fishing_checkbox_{account_id}").setSizePolicy(size_policy)
     font = QtGui.QFont()
@@ -1128,8 +1128,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"shovel_checkbox_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"shovel_checkbox_{account_id}").setSizePolicy(size_policy)
     font = QtGui.QFont()
@@ -1179,8 +1179,8 @@ def load_account(self, account_id):
     size_policy.setVerticalStretch(0)
     size_policy.setHeightForWidth(
         getattr(self.ui, f"rifle_checkbox_{account_id}")
-        .sizePolicy()
-        .hasHeightForWidth()
+            .sizePolicy()
+            .hasHeightForWidth()
     )
     getattr(self.ui, f"rifle_checkbox_{account_id}").setSizePolicy(size_policy)
     font = QtGui.QFont()

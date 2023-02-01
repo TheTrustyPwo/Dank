@@ -1,28 +1,19 @@
 import asyncio
 import ctypes
-import io
 import json
 import os
-import platform
-import stat
-import subprocess
-import sys
 import tempfile
 import threading
-import zipfile
-from pathlib import Path
 
 import discord.errors
 import numpy
-import requests
-from discord.ext import commands, tasks
 from PIL import Image, ImageDraw
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QColor, QFontDatabase, QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from discord.ext import commands, tasks
 from qasync import QEventLoop, asyncSlot
 
-import resources.icons
 from resources.interface import *
 from resources.load_account import load_account
 
@@ -30,6 +21,7 @@ try:
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("dankmemergrinder")
 except AttributeError:
     pass
+
 
 def update():
     global config_dict
