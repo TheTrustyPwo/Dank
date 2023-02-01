@@ -15,7 +15,7 @@ class Commands(commands.Cog):
     async def cog_load(self):
         self.commands.start()
 
-    @tasks.loop(seconds=0.05)
+    @tasks.loop(seconds=0.10)
     async def commands(self):
         if not self.bot.config["state"] or self.bot.lock:
             return
