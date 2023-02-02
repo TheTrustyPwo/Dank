@@ -25,13 +25,15 @@ class Autobuy(commands.Cog):
                 try:
                     if embed["title"] == "Your lifesaver protected you!" and \
                             self.bot.config_dict[self.bot.account_id]["autobuy"]["lifesavers"]["state"]:
-                        remaining = int(
-                            re.search("have (.*?)x Life Saver", message.components[0].children[0].label).group(1))
+                        remaining = int(re.search("have (.*?)x Life Saver", message.components[0].children[0].label).group(1))
+                        if remaining == 0:
+                            self.bot.config["state"] = False
+                            print(f"No more lifesavers: Stopping {self.bot.account_id}")
+                            return
                         required = int(self.bot.config_dict[self.bot.account_id]["autobuy"]["lifesavers"]["amount"])
                         if remaining < required:
-                            await self.bot.send("withdraw", channel, amount=str((required - remaining) * 100000))
-                            await self.bot.sub_send("shop", "buy", channel, item="Life Saver",
-                                                    quantity=str(required - remaining))
+                            await self.bot.send("withdraw", amount=str((required - remaining) * 100000))
+                            await self.bot.sub_send("shop", "buy", item="Life Saver", quantity=str(required - remaining))
                             return
                 except KeyError:
                     pass

@@ -23,20 +23,29 @@ from qasync import QEventLoop, asyncSlot
 import resources.icons
 from resources.interface import *
 from resources.load_account import load_account
+
 try:
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("dankmemergrinder")
 except AttributeError:
     pass
+
+
 def update():
     global config_dict
     threading.Timer(5, update).start()
     with open("config.json", "r") as config_file:
         config_dict = json.load(config_file)
+
+
 update()
+
+
 def resource_path(relative_path):
     if hasattr(sys, "_MEIPASS"):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
+
+
 async def start_bot(token, account_id):
     class MyClient(commands.Bot):
         def __init__(self):
@@ -70,7 +79,6 @@ async def start_bot(token, account_id):
                 "dig": 25 if premium else 40,
                 "fish": 25 if premium else 40,
                 "hunt": 25 if premium else 40,
-                "pm": 15 if premium else 20,
                 "pm": 16 if premium else 21,
                 "beg": 25 if premium else 40,
                 "hl": 10 if premium else 20,
@@ -86,17 +94,20 @@ async def start_bot(token, account_id):
             self.last_ran = {}
             for command in self.commands_list:
                 self.last_ran[command] = 0
+
         @tasks.loop(seconds=5)
         async def update(self):
             with open("config.json", "r") as config_file:
                 self.config_dict = json.load(config_file)
                 self.config = self.config_dict[self.account_id]
+
         @staticmethod
         async def click(message, component, children):
             try:
                 await message.components[component].children[children].click()
             except (discord.errors.HTTPException, discord.errors.InvalidData):
                 pass
+
         @staticmethod
         async def select(message, component, children, option):
             try:
@@ -104,6 +115,7 @@ async def start_bot(token, account_id):
                 await select_menu.choose(select_menu.options[option])
             except (discord.errors.HTTPException, discord.errors.InvalidData):
                 pass
+
         async def send(self, command_name, channel=None, **kwargs):
             if channel is None:
                 channel = self.channel
@@ -114,6 +126,7 @@ async def start_bot(token, account_id):
                 except (discord.errors.DiscordServerError, KeyError, discord.errors.InvalidData):
                     pass
                 return
+
         async def sub_send(self, command_name, sub_command_name, channel=None, **kwargs):
             if channel is None:
                 channel = self.channel
@@ -135,6 +148,7 @@ async def start_bot(token, account_id):
                     return
             except (discord.errors.DiscordServerError, KeyError, discord.errors.InvalidData):
                 pass
+
         async def setup_hook(self):
             self.update.start()
             self.channel = await self.fetch_channel(self.channel_id)
@@ -168,6 +182,7 @@ async def start_bot(token, account_id):
             await self.load_extension("cogs.autobuy")
             await self.load_extension("cogs.commands")
             await self.load_extension("cogs.market")
+
     try:
         await MyClient().start(token)
     except discord.errors.LoginFailure:
@@ -188,12 +203,18 @@ async def start_bot(token, account_id):
             QtGui.QIcon.State.Off,
         )
         getattr(window.ui, f"account_btn_{account_id}").setIcon(icon)
+
+
 class Stream(QtCore.QObject):
     new_text = QtCore.pyqtSignal(str)
+
     def write(self, text):
         self.new_text.emit(str(text))
+
+
 class MainWindow(QMainWindow):
     output = pyqtSignal(list)
+
     def __init__(self):
         QMainWindow.__init__(self)
         self.setWindowIcon(QIcon(resource_path("resources/icon.ico")))
@@ -231,6 +252,7 @@ class MainWindow(QMainWindow):
         self.ui.account_btn_1.setStyleSheet("background-color: #5865f2;")
         self.ui.add_account_btn.clicked.connect(self.add_account)
         self.ui.minus_account_btn.clicked.connect(self.delete_account)
+
     def onUpdateText(self, text):
         for account_id in map(str, range(1, len(config_dict) + 1)):
             getattr(self.ui, f"output_text_{account_id}").setTextColor(QColor(216, 60, 62))
@@ -240,6 +262,7 @@ class MainWindow(QMainWindow):
             cursor.insertText(text)
             getattr(self.ui, f"output_text_{account_id}").setTextCursor(cursor)
             getattr(self.ui, f"output_text_{account_id}").ensureCursorVisible()
+
     @asyncSlot()
     async def check(self):
         if config_dict[self.account_id]["state"] is False:
@@ -256,6 +279,7 @@ class MainWindow(QMainWindow):
             self.ui.toggle.setStyleSheet("background-color : #d83c3e")
             self.ui.toggle.setText(f"Bot {self.account_id} Disabled")
             self.output.emit([f"output_text_{self.account_id}", f"Stopped Bot {self.account_id}"])
+
     @asyncSlot()
     async def sidebar(self, button, widget):
         buttons = [
@@ -270,6 +294,7 @@ class MainWindow(QMainWindow):
             else:
                 btn.setStyleSheet("background-color: #42464d")
         getattr(self.ui, f"main_menu_widget_{self.account_id}").setCurrentWidget(widget)
+
     @asyncSlot()
     async def accounts(self, account_id):
         for i in range(1, len(config_dict) + 1):
@@ -289,11 +314,13 @@ class MainWindow(QMainWindow):
         )
         current_widget = getattr(self.ui, f"main_menu_widget_{self.account_id}").currentWidget()
         await self.sidebar(getattr(self.ui, f"{current_widget.objectName()[:-9]}_btn"), current_widget)
+
     @asyncSlot()
     async def commands(self, command, state):
         config_dict[self.account_id]["commands"].update({command: state})
         with open("config.json", "w") as file:
             json.dump(config_dict, file, ensure_ascii=False, indent=4)
+
     @asyncSlot()
     async def toggle_all(self, state):
         for command in config_dict[self.account_id]["commands"]:
@@ -302,6 +329,7 @@ class MainWindow(QMainWindow):
                 config_dict[self.account_id]["commands"].update({command: state})
                 with open("config.json", "w") as file:
                     json.dump(config_dict, file, ensure_ascii=False, indent=4)
+
     @asyncSlot()
     async def autobuy(self, item, state, command=None):
         if item == "lifesavers":
@@ -312,6 +340,7 @@ class MainWindow(QMainWindow):
             config_dict[self.account_id]["autobuy"][item] = state
             with open("config.json", "w") as file:
                 json.dump(config_dict, file, ensure_ascii=False, indent=4)
+
     @asyncSlot()
     async def settings(self, command, state):
         if command == "channel":
@@ -346,6 +375,7 @@ class MainWindow(QMainWindow):
             config_dict[self.account_id].update({"trivia_correct_chance": int(state) / 100})
             with open("config.json", "w") as file:
                 json.dump(config_dict, file, ensure_ascii=False, indent=4)
+
     @asyncSlot()
     async def add_account(self):
         with open("config.json", "r+") as file:
@@ -386,6 +416,7 @@ class MainWindow(QMainWindow):
             json.dump(config_dict, file, ensure_ascii=False, indent=4)
             file.truncate()
         load_account(self, str(account_id))
+
     @asyncSlot()
     async def delete_account(self):
         with open("config.json", "r+") as file:
@@ -395,6 +426,7 @@ class MainWindow(QMainWindow):
             file.seek(0)
             json.dump(config_dict, file, ensure_ascii=False, indent=4)
             file.truncate()
+
     def appendText(self, data):
         getattr(self.ui, data[0]).setTextColor(QColor(232, 230, 227))
         cursor = getattr(self.ui, data[0]).textCursor()
@@ -403,6 +435,8 @@ class MainWindow(QMainWindow):
         cursor.insertText(data[1] + "\n")
         getattr(self.ui, data[0]).setTextCursor(cursor)
         getattr(self.ui, data[0]).ensureCursorVisible()
+
+
 def between_callback(token, account_id):
     getattr(window.ui, f"account_btn_{account_id}").setText("Logging In")
     icon = QtGui.QIcon()
@@ -416,6 +450,8 @@ def between_callback(token, account_id):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(start_bot(token, account_id))
     loop.close()
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
