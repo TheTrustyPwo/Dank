@@ -54,7 +54,7 @@ class Transfer(commands.Cog):
             await self.bot.send("inventory")
         else:
             try:
-                await self.send(configurations[conf])
+                await self.send(configurations[conf], True)
             except KeyError:
                 pass
 
