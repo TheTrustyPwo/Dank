@@ -26,7 +26,8 @@ class Autobuy(commands.Cog):
                 try:
                     if embed["title"] == "Your lifesaver protected you!" and \
                             self.bot.config_dict[self.bot.account_id]["autobuy"]["lifesavers"]["state"]:
-                        remaining = int(re.search("have (.*?)x Life Saver", message.components[0].children[0].label).group(1))
+                        remaining = int(
+                            re.search("have (.*?)x Life Saver", message.components[0].children[0].label).group(1))
                         required = int(self.bot.config_dict[self.bot.account_id]["autobuy"]["lifesavers"]["amount"])
                         if remaining == 0 and required > 1:
                             self.bot.window.check()
@@ -34,7 +35,8 @@ class Autobuy(commands.Cog):
                             return
                         if remaining < required:
                             await self.bot.send("withdraw", amount=str((required - remaining) * 100000))
-                            await self.bot.sub_send("shop", "buy", item="Life Saver", quantity=str(required - remaining))
+                            await self.bot.sub_send("shop", "buy", item="Life Saver",
+                                                    quantity=str(required - remaining))
                             return
                 except KeyError:
                     pass
@@ -50,8 +52,7 @@ class Autobuy(commands.Cog):
                         await self.bot.send("use", item="Fishing Bait")
                     elif "Cowboy Boots expired!" in embed["description"]:
                         await self.bot.send("use", item="Cowboy Boots")
-                    elif "your padlock broke" in embed["description"] or "stopped by your padlock" in embed[
-                        "description"]:
+                    elif "your padlock broke" in embed["description"] or "stopped by your padlock" in embed["description"]:
                         await self.bot.send("use", item="Padlock")
                     elif "your bank is being robbed!" in embed["description"]:
                         self.bankrob = True

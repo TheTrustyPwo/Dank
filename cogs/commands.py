@@ -3,7 +3,7 @@ import time
 
 from discord.ext import commands, tasks
 
-ITEMS = ["Lucky Horseshoe", "Pizza", "Ammo", "Fishing Bait", "Cowboy Boots"]
+ITEMS = ["Lucky Horseshoe", "Pizza", "Ammo", "Fishing Bait", "Cowboy Boots", "Prestige Coin"]
 
 
 class Commands(commands.Cog):
@@ -23,7 +23,7 @@ class Commands(commands.Cog):
             if command == "bj":
                 continue
             if time.time() - self.bot.last_ran[command] < self.bot.commands_delay[command] or not \
-            self.bot.config["commands"][command]:
+                    self.bot.config["commands"][command]:
                 continue
             if command == "use":
                 await self.bot.send(self.bot.commands_list[command], item=ITEMS[self.item])

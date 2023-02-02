@@ -184,6 +184,7 @@ async def start_bot(token, account_id):
             await self.load_extension("cogs.commands")
             await self.load_extension("cogs.market")
             await self.load_extension("cogs.transfer")
+            await self.load_extension("cogs.utils")
 
     try:
         await MyClient().start(token)
