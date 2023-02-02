@@ -10,9 +10,10 @@ class Autobuy(commands.Cog):
         self.bankrob = False
 
     async def cog_load(self):
-        await self.bot.send("use", item="Lucky Horseshoe")
-        await asyncio.sleep(4)
-        await self.bot.send("use", item="Pizza Slice")
+        # await self.bot.send("use", item="Lucky Horseshoe")
+        # await asyncio.sleep(4)
+        # await self.bot.send("use", item="Pizza Slice")
+        pass
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -26,11 +27,11 @@ class Autobuy(commands.Cog):
                     if embed["title"] == "Your lifesaver protected you!" and \
                             self.bot.config_dict[self.bot.account_id]["autobuy"]["lifesavers"]["state"]:
                         remaining = int(re.search("have (.*?)x Life Saver", message.components[0].children[0].label).group(1))
-                        if remaining == 0:
-                            self.bot.config["state"] = False
-                            print(f"No more lifesavers: Stopping {self.bot.account_id}")
-                            return
                         required = int(self.bot.config_dict[self.bot.account_id]["autobuy"]["lifesavers"]["amount"])
+                        if remaining == 0 and required > 1:
+                            self.bot.window.check()
+                            print(f"No more lifesavers: Pausing commands {self.bot.account_id}")
+                            return
                         if remaining < required:
                             await self.bot.send("withdraw", amount=str((required - remaining) * 100000))
                             await self.bot.sub_send("shop", "buy", item="Life Saver", quantity=str(required - remaining))

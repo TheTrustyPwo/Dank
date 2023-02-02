@@ -173,6 +173,7 @@ async def start_bot(token, account_id):
                 Image.fromarray(final_img_arr).save(f"{path}.png")
                 getattr(self.window.ui, f"account_btn_{account_id}").setIcon(QIcon(f"{path}.png"))
                 getattr(self.window.ui, f"account_btn_{account_id}").setIconSize(QtCore.QSize(35, 35))
+
             await self.load_extension("cogs.trivia")
             await self.load_extension("cogs.pm")
             await self.load_extension("cogs.hl")
@@ -182,6 +183,7 @@ async def start_bot(token, account_id):
             await self.load_extension("cogs.autobuy")
             await self.load_extension("cogs.commands")
             await self.load_extension("cogs.market")
+            await self.load_extension("cogs.transfer")
 
     try:
         await MyClient().start(token)
