@@ -71,11 +71,14 @@ class Transfer(commands.Cog):
                     items = []
 
                     for s in embed["description"].split('\n'):
-                        item = re.search("\*\*<.*> (.*)\*\* . (.*)", s).group(1)
-                        amount = int(re.search("\*\*<.*> (.*)\*\* . (.*)", s).group(2).replace(',', ''))
-                        if item in ["Trivia Trophy", "Birthday Cake"]:
-                            continue
-                        items.append((item, amount))
+                        try:
+                            item = re.search("\*\*<.*> (.*)\*\* . (.*)", s).group(1)
+                            amount = int(re.search("\*\*<.*> (.*)\*\* . (.*)", s).group(2).replace(',', ''))
+                            if item in ["Trivia Trophy", "Birthday Cake"]:
+                                continue
+                            items.append((item, amount))
+                        except Exception:
+                            print("BAD!!!", s)
 
                     if not items:
                         self.transfer = False
